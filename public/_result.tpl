@@ -16,7 +16,7 @@
         }
 
         .notification {
-            background-color: white; /* Зеленый цвет */
+            background-color: white;
             color: white;
             padding: 20px;
             border-radius: 5px;

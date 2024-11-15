@@ -26,6 +26,7 @@ class Main
             $this->template->assign("session", $session[0]);
             App::$flash->clearMessage('json_session');
         }
+        // App::$flash->addMessage("flash", ['notify' => "Форма загружена"]);
 
         $this->template->assign("state", "anketa");
         $this->template->assign("title", "Анкета участника");
@@ -39,10 +40,13 @@ class Main
     {
         if ($_REQUEST['captcha'] !== $_SESSION['captcha_keystring']) {
             unset($_REQUEST['captcha']); // иначе значение капчи окажется сохранено в flash-message
-            App::$flash->addMessage('error', 'Капча введена неправильно!');
+
+            App::$flash->addMessage("flash", ['error' => 'Капча введена неправильно!']);
             App::$flash->addMessage('json_session', json_encode($_REQUEST));
+
             $this->template->setRedirect(AppRouter::getRouter('view'));
-            return;
+
+            return true;
         }
 
         $this->template->setTemplate( '_result.tpl');
@@ -76,11 +80,10 @@ class Main
 
         $query->execute();
 
-
-
         // $sth = $this->pdo->prepare("INSERT INTO participants (fio, email, address, cards_count) VALUES (:fio, :email, :address, :cards_count)" );
 
         // (new Mailer())->mailToAdmin("Новый клуб", "Некто с адресом {$dataset['owner_email']} подал заявку на добавление клуба {$dataset['title']}");
+
         return true;
     }
 
