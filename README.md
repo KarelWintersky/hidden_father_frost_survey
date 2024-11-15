@@ -45,3 +45,37 @@ MAILER.SMTP.PASSWORD = ''
 ```
 put it to `/etc/arris/hidden_father_frost/site.ini`
 
+# Nginx 
+
+```txt
+server {
+    listen 80;
+    server_name fatherfrost.local;
+
+    root /var/www/hiddenfatherfrost/public/;
+
+    index index.php index.html;
+
+    error_log /var/log/nginx/hidden-father-frost.error.log;
+    access_log /var/log/nginx/hidden-father-frost.access.log;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ \.php$ {
+        include         fastcgi_params;
+        fastcgi_param   SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_pass    php-handler-8-2;
+        fastcgi_index   index.php;
+    }
+
+    location ~ favicon.* {
+        access_log      off;
+        log_not_found   off;
+    }
+
+}
+
+```
+

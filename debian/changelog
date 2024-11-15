@@ -1,6 +1,18 @@
-hiddenfatherfrost (1.0.0) stable; urgency=medium
+hiddenfatherfrost (0.99.99) stable; urgency=medium
 
-  * release
+  * Release Candidate
+
+ -- Karel Wintersky <karel.wintersky@yandex.ru>  Sat, 16 Nov 2024 02:13:46 +0300
+
+hiddenfatherfrost (0.99.5) stable; urgency=medium
+
+  * pre release
+
+ -- Karel Wintersky <karel.wintersky@yandex.ru>  Sat, 16 Nov 2024 01:38:40 +0300
+
+hiddenfatherfrost (0.99.4) stable; urgency=medium
+
+  * pre release
 
  -- Karel Wintersky <karel.wintersky@yandex.ru>  Sat, 16 Nov 2024 00:07:45 +0300
 
