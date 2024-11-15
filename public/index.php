@@ -56,7 +56,11 @@ try {
     AppRouter::post('/', [ \SecretFatherFrost\Main::class, 'callback'], 'callback');
     AppRouter::dispatch();
 
-    App::$template->assign("flash", json_encode( App::$flash->getMessage('flash'), JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT ));
+    // либо так, а в шаблоне: const flash_messages = {$flash_messages|json_encode|default:"{ }"};
+    App::$template->assign("flash_messages", App::$flash->getMessage('flash') ?? []);
+
+    // либо так, но в шаблоне: const flash_messages = {$flash_messages|default:"{ }"};
+    // App::$template->assign("flash_messages", json_encode( App::$flash->getMessage('flash') ?? [], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT ));
 
 } catch (Exception $e) {
     dd($e);
@@ -70,7 +74,7 @@ if (!empty($render)) {
     echo $render;
 }
 
-logSiteUsage( AppLogger::scope('site_usage') );
+logSiteUsage( AppLogger::scope('site_usage'));
 
 if (App::$template->isRedirect()) {
     App::$template->makeRedirect();

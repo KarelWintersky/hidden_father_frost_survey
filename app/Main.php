@@ -27,6 +27,7 @@ class Main
             App::$flash->clearMessage('json_session');
         }
         // App::$flash->addMessage("flash", ['notify' => "Форма загружена"]);
+        // App::$flash->addMessage("flash", ['notify' => "Форма загружена2"]);
 
         $this->template->assign("state", "anketa");
         $this->template->assign("title", "Анкета участника");

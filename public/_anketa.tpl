@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Анкета участника</title>
 
+    {include file="_favicons.tpl"}
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -115,9 +117,10 @@
         }
     </style>
     <script type="module">
-        import XZNotify from './xz-notify.min.js';
+        import XZNotify from './assets/xz-notify.min.js';
         document.addEventListener('DOMContentLoaded', function() {
-            const flash_messages = {$flash|default:'[ ]'};
+            const flash_messages = {$flash_messages|json_encode|default:"{ }"};
+
             const xz_default_options = {
                 expire: 10000,
                 position: 'n',
@@ -151,6 +154,7 @@
             }
 
             const session_values = JSON.parse('{$session|default:"{ }"}');
+
             Object.keys(session_values).forEach(function(key) {
                 const input = document.querySelector(`[name='${ key }']`);
                 if (input) {

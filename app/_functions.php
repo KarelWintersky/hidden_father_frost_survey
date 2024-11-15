@@ -38,13 +38,12 @@ function logSiteUsage(LoggerInterface $logger, $is_print = false): void
         'time.total'        =>  number_format(microtime(true) - $_SERVER['REQUEST_TIME_FLOAT'], 6, '.', ''),
         'memory.usage'      =>  memory_get_usage(true),
         'site.url'          =>  idn_to_utf8($_SERVER['HTTP_HOST']) . $_SERVER['REQUEST_URI'],
-        'isMobile'          =>  config('features.is_mobile'),
     ];
 
     /**
      * @var DBWrapper $pdo
      */
-    $pdo = (\Arris\App::factory())->getService('pdo');
+    $pdo = App::$pdo;
 
     if (!is_null($pdo)) {
         $stats = $pdo->getStats();
