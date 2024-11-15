@@ -16,6 +16,8 @@ class Main
 
         $this->pdo = App::$pdo;
         $this->template = App::$template;
+
+        $this->table = 'participants';
     }
 
     public function view()
@@ -27,12 +29,15 @@ class Main
 
         $this->template->assign("state", "anketa");
         $this->template->assign("title", "Анкета участника");
-        $this->template->setTemplate('anketa.tpl');
+        $this->template->setTemplate('_anketa.tpl');
     }
 
+    /**
+     * @throws Exception
+     */
     public function callback()
     {
-        if ($_REQUEST['captcha'] != $_SESSION['captcha_keystring']) {
+        if ($_REQUEST['captcha'] !== $_SESSION['captcha_keystring']) {
             unset($_REQUEST['captcha']); // иначе значение капчи окажется сохранено в flash-message
             App::$flash->addMessage('error', 'Капча введена неправильно!');
             App::$flash->addMessage('json_session', json_encode($_REQUEST));
@@ -40,7 +45,7 @@ class Main
             return;
         }
 
-        $query = new Query(App::$pdo, includeTableAliasColumns: false);
+        $this->template->setTemplate( '_result.tpl');
 
         $dataset = [
             'fio'           =>  input('fio'),
@@ -48,21 +53,35 @@ class Main
             'address'       =>  input('address'),
             'cards_count'   =>  input('cards_count'),
         ];
-        try {
-            $query = $query
-                ->insertInto('participants')
-                ->values($dataset);
 
-            $query->execute();
+        $query = new Query($this->pdo, includeTableAliasColumns: true);
 
-        } catch (Exception $e) {
-            dd($e);
+        // проверяем, была ли заявка?
+        $query = $query->from($this->table)->where('email = ?', $dataset['email']);
+
+        $email = $query->fetch();
+
+        if ($email) {
+            $this->template->assign("state", "already");
+            return true;
         }
 
-        // (new Mailer())->mailToAdmin("Новый клуб", "Некто с адресом {$dataset['owner_email']} подал заявку на добавление клуба {$dataset['title']}");
+        $query = new Query($this->pdo, includeTableAliasColumns: true);
+
         $this->template->assign("state", "success");
-        $this->template->assign("title", "Принято!");
-        $this->template->setRedirect( AppRouter::getRouter('view') );
+
+        $query = $query
+            ->insertInto($this->table)
+            ->values($dataset);
+
+        $query->execute();
+
+
+
+        // $sth = $this->pdo->prepare("INSERT INTO participants (fio, email, address, cards_count) VALUES (:fio, :email, :address, :cards_count)" );
+
+        // (new Mailer())->mailToAdmin("Новый клуб", "Некто с адресом {$dataset['owner_email']} подал заявку на добавление клуба {$dataset['title']}");
+        return true;
     }
 
 }

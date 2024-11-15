@@ -98,21 +98,9 @@
     </script>
 </head>
 <body>
-
-{if $state eq 'success'}
-    <div class="form-container">
-        <div class="captcha">
-            <h2>Запрос принят!</h2>
-            <p>Товарищ Вомбат сохранил ваши контактные данные.</p>
-
-            <p>Они будут обработаны и в середине декабря всем участникам будут разосланы адреса.</p>
-        </div>
-    </div>
-{else}
-
     <div class="form-container">
         <h2>Анкета участника движухи "Тайный Дед-Мороз"</h2>
-        <form action="{Arris\AppRouter::getRouter('callback')}" method="POST">
+        <form action="{Arris\AppRouter::getRouter('callback')}" method="post">
             <input type="hidden" name="action" value="request">
             <label>
                 <input type="text" name="fio" placeholder="Имя отправителя (для учёта)" required>
@@ -138,7 +126,7 @@
             <br>
 
             <div class="captcha">
-                <img src="captcha.php" alt="Капча">
+                <img src="/captcha.php" alt="Капча" width="120" height="60" onclick="this.src='/captcha.php?r=' + Math.random(); return false;">
                 <label>
                     <input type="text" name="captcha" placeholder="Введите капчу" required>
                 </label>
@@ -154,7 +142,6 @@
         </form>
     </div>
 
-{/if}
 
 </body>
 </html>

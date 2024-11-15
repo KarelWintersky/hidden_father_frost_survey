@@ -19,6 +19,7 @@ try {
     require_once __DIR__ . '/../vendor/autoload.php';
 
     $options = parse_ini_file(PATH_ENV . 'site.ini', true);
+    $credentials = $options['database'];
 
     AppLogger::init("rpgClubs", bin2hex(random_bytes(4)), [
         'default_logfile_path'      =>  PATH_ROOT . '/logs/',
@@ -28,7 +29,17 @@ try {
         [ 'site_usage.log', AppLogger\Monolog\Logger::NOTICE]
     ]);
 
-    App::$pdo = new \Arris\Database\DBWrapper($options['database']);
+    App::$pdo = new \Arris\Database\DBWrapper([
+        'driver'            =>  'mysql',
+        'hostname'          =>  $credentials['DB.HOST'],
+        'database'          =>  $credentials['DB.NAME'],
+        'username'          =>  $credentials['DB.USERNAME'],
+        'password'          =>  $credentials['DB.PASSWORD'],
+        'port'              =>  $credentials['DB.PORT'],
+        'charset'           =>  $credentials['DB.CHARSET'],
+        'charset_collate'   =>  $credentials['DB.COLLATE'],
+        'slow_query_threshold'  => 1
+    ]);
 
     App::$template = new \Arris\Template\Template();
     App::$template
@@ -47,7 +58,7 @@ try {
     AppRouter::dispatch();
 
 } catch (Exception $e) {
-
+    dd($e);
 }
 $render = App::$template->render();
 if (!empty($render)) {
