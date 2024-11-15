@@ -97,7 +97,14 @@
 <body>
 
 {if $state eq 'success'}
-    ...
+    <div class="form-container">
+        <div class="captcha">
+            <h2>Запрос принят!</h2>
+            <p>Товарищ Вомбат сохранил ваши контактные данные.</p>
+
+            <p>Они будут обработаны и в середине декабря всем участникам будут разосланы адреса.</p>
+        </div>
+    </div>
 {else}
 
     <div class="form-container">
@@ -105,17 +112,17 @@
         <form action="{Arris\AppRouter::getRouter('callback')}" method="POST">
             <input type="hidden" name="action" value="request">
             <label>
-                <input type="text" name="name" placeholder="Имя" required>
+                <input type="text" name="fio" placeholder="Имя отправителя (для учёта)" required>
             </label>
             <label>
-                <input type="email" name="email" placeholder="Email" required>
+                <input type="email" name="email" placeholder="Email отправителя (для учёта)" required>
             </label>
             <label>
-                <textarea name="address" placeholder="Адрес" required></textarea>
+                <textarea name="address" placeholder="Адрес получателя открытки (включая индекс)" required></textarea>
             </label>
 
             <br><br>
-            Я отправлю :
+            Я отправлю:
             <label>
                 <select name="cards_count">
                     <option value="1" selected>1 открытку</option>

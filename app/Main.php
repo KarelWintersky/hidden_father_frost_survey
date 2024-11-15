@@ -2,10 +2,12 @@
 
 namespace SecretFatherFrost;
 
+use AllowDynamicProperties;
 use Arris\AppRouter;
 use AJUR\FluentPDO\Exception;
 use AJUR\FluentPDO\Query;
 
+#[AllowDynamicProperties]
 class Main
 {
     public function __construct()
@@ -23,13 +25,15 @@ class Main
             App::$flash->clearMessage('json_session');
         }
 
-        $this->template->assign("state", "anketa");
+        $this->template->assign("state", "success");
         $this->template->assign("title", "Анкета участника");
         $this->template->setTemplate('anketa.tpl');
     }
 
     public function callback()
     {
+        dd($_REQUEST);
+
         if ($_REQUEST['captcha'] != $_SESSION['captcha_keystring']) {
             unset($_REQUEST['captcha']); // иначе значение капчи окажется сохранено в flash-message
             App::$flash->addMessage('error', 'Капча введена неправильно!');
@@ -37,10 +41,14 @@ class Main
             $this->template->setRedirect(AppRouter::getRouter('view'));
             return;
         }
+
         $query = new Query(App::$pdo, includeTableAliasColumns: false);
 
         $dataset = [
-            "email"     =>  input('email'),
+            'fio'           =>  input('fio'),
+            'email'         =>  input('email'),
+            'address'       =>  input('address'),
+            'cards_count'   =>  input('cards_count'),
         ];
         try {
             $query = $query
