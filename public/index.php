@@ -57,10 +57,10 @@ try {
     AppRouter::dispatch();
 
     // либо так, а в шаблоне: const flash_messages = {$flash_messages|json_encode|default:"{ }"};
-    App::$template->assign("flash_messages", App::$flash->getMessage('flash') ?? []);
+    App::$template->assign("flash_messages", App::$flash->getMessage('flash', []));
 
     // либо так, но в шаблоне: const flash_messages = {$flash_messages|default:"{ }"};
-    // App::$template->assign("flash_messages", json_encode( App::$flash->getMessage('flash') ?? [], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT ));
+    // App::$template->assign("flash_messages", json_encode( App::$flash->getMessage('flash', []), JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT ));
 
 } catch (Exception $e) {
     dd($e);

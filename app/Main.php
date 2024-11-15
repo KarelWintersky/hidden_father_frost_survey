@@ -31,7 +31,7 @@ class Main
 
         $this->template->assign("state", "anketa");
         $this->template->assign("title", "Анкета участника");
-        $this->template->setTemplate('_anketa.tpl');
+        $this->template->setTemplate('templates/_anketa.tpl');
     }
 
     /**
@@ -50,7 +50,7 @@ class Main
             return true;
         }
 
-        $this->template->setTemplate( '_result.tpl');
+        $this->template->setTemplate( 'templates/_result.tpl');
 
         $dataset = [
             'fio'           =>  input('fio'),

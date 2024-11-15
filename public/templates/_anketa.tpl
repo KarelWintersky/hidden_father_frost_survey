@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Анкета участника</title>
 
-    {include file="_favicons.tpl"}
+    {include file="templates/_favicons.tpl"}
 
     <style>
         body {
@@ -117,7 +117,7 @@
         }
     </style>
     <script type="module">
-        import XZNotify from './assets/xz-notify.min.js';
+        import XZNotify from '/assets/xz-notify.min.js';
         document.addEventListener('DOMContentLoaded', function() {
             const flash_messages = {$flash_messages|json_encode|default:"{ }"};
 

@@ -22,7 +22,7 @@
         "karelwintersky/arris.database": "^1.0",
         "karelwintersky/arris.helpers": "^0.6.0",
         "karelwintersky/arris.toolkit.cli-console": "^1.0",
-        "psr/log": "^1.1",
+        "psr/log": "*",
         "ajur-media/kcaptcha": "^1.2",
         "ajur-media/fluentpdo": "^1.99"
     },

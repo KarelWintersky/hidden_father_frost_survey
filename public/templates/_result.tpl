@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Оповещение</title>
-    {include file="_favicons.tpl"}
+    {include file="templates/_favicons.tpl"}
     <style>
         body {
             display: flex;
