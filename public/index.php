@@ -54,8 +54,9 @@ try {
     AppRouter::setDefaultNamespace("\SecretFatherFrost");
     AppRouter::get('/', [ \SecretFatherFrost\Main::class, 'view'], 'view');
     AppRouter::post('/', [ \SecretFatherFrost\Main::class, 'callback'], 'callback');
-
     AppRouter::dispatch();
+
+    App::$template->assign("flash", json_encode( App::$flash->getMessage('flash'), JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT ));
 
 } catch (Exception $e) {
     dd($e);

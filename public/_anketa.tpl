@@ -81,11 +81,74 @@
             }
         }
     </style>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const flash_messages = {$flash_messages|default:'[ ]'};
+    <style>
+        xz-notify {
+            --xz-notify-title-color: currentColor;
 
-            // NotifyBarHelper.notifyFlashMessages(flash_messages);
+            padding: 1em;
+            border-radius: .25em;
+            border-width: 1px;
+
+            background: #cfe2ff;
+            border-color: #b6d4fe;
+            color: #084298;
+        }
+        xz-notify[type="success"] {
+            background: #d1e7dd;
+            border-color: #badbcc;
+            color: #0f5132;
+        }
+        xz-notify[type="info"] {
+            background: #cff4fc;
+            border-color: #b6effb;
+            color: #055160;
+        }
+        xz-notify[type="warning"] {
+            background: #fff3cd;
+            border-color: #ffecb5;
+            color: #664d03;
+        }
+        xz-notify[type="error"] {
+            background: #f8d7da;
+            border-color: #f5c2c7;
+            color: #842029;
+        }
+    </style>
+    <script type="module">
+        import XZNotify from './xz-notify.min.js';
+        document.addEventListener('DOMContentLoaded', function() {
+            const flash_messages = {$flash|default:'[ ]'};
+            const xz_default_options = {
+                expire: 10000,
+                position: 'n',
+                closeable: true
+            };
+            for (const message of flash_messages) {
+                for (const [key, value] of Object.entries(message)) {
+                    let notification = null;
+                    switch (key) {
+                        case 'success': {
+                            notification = XZNotify.create(value, Object.assign({ }, xz_default_options, {
+                                type: 'info'
+                            }));
+                            break;
+                        }
+                        case 'error': {
+                            notification = XZNotify.create(value, Object.assign({ }, xz_default_options, {
+                                type: 'error'
+                            }));
+                            break;
+                        }
+                        default: {
+                            notification = XZNotify.create(value, Object.assign({ }, xz_default_options, {
+                                type: 'debug'
+                            }));
+                            break;
+                        }
+                    }
+                    document.body.appendChild(notification);
+                }
+            }
 
             const session_values = JSON.parse('{$session|default:"{ }"}');
             Object.keys(session_values).forEach(function(key) {
