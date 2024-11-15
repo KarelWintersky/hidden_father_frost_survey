@@ -25,15 +25,13 @@ class Main
             App::$flash->clearMessage('json_session');
         }
 
-        $this->template->assign("state", "success");
+        $this->template->assign("state", "anketa");
         $this->template->assign("title", "Анкета участника");
         $this->template->setTemplate('anketa.tpl');
     }
 
     public function callback()
     {
-        dd($_REQUEST);
-
         if ($_REQUEST['captcha'] != $_SESSION['captcha_keystring']) {
             unset($_REQUEST['captcha']); // иначе значение капчи окажется сохранено в flash-message
             App::$flash->addMessage('error', 'Капча введена неправильно!');

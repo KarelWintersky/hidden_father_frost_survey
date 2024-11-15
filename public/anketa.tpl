@@ -83,8 +83,11 @@
     </style>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const session_values = JSON.parse('{$session|default:"{ }"}');
+            const flash_messages = {$flash_messages|default:'[ ]'};
 
+            // NotifyBarHelper.notifyFlashMessages(flash_messages);
+
+            const session_values = JSON.parse('{$session|default:"{ }"}');
             Object.keys(session_values).forEach(function(key) {
                 const input = document.querySelector(`[name='${ key }']`);
                 if (input) {

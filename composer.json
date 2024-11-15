@@ -16,16 +16,15 @@
         "ext-intl": "*",
         "karelwintersky/arris": "^2.12",
         "karelwintersky/arris.logger": "^1.99",
+        "karelwintersky/arris.router": "^1.101",
         "karelwintersky/arris.entity": "^0.9.10",
         "karelwintersky/arris.template": "^0.99.2",
         "karelwintersky/arris.database": "^1.0",
+        "karelwintersky/arris.helpers": "^0.6.0",
         "karelwintersky/arris.toolkit.cli-console": "^1.0",
         "psr/log": "^1.1",
-        "nette/mail": "^4.0",
         "ajur-media/kcaptcha": "^1.2",
-        "karelwintersky/arris.router": "^1.101",
-        "ajur-media/fluentpdo": "^1.99",
-        "karelwintersky/arris.helpers": "^0.6.0"
+        "ajur-media/fluentpdo": "^1.99"
     },
     "autoload": {
         "files": [
@@ -34,5 +33,8 @@
         "psr-4": {
             "SecretFatherFrost\\"   : "app/"
         }
+    },
+    "suggest": {
+        "nette/mail": "^4.0"
     }
 }

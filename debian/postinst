@@ -1,0 +1,70 @@
+#! /bin/sh
+
+set -e
+ANSI_RED='\033[0;31m'
+ANSI_GREEN='\033[0;32m'
+ANSI_YELLOW='\033[1;33m'
+ANSI_RESET='\033[0m'
+
+PATH_PROJECT=/var/www/hiddenfatherfrost
+PATH_PUBLIC=${PATH_PROJECT}/public
+PATH_CACHE_SMARTY=${PATH_PROJECT}/cache
+
+PHP_VERSIONS=$(ps -e -o stat,command | grep -E '^Ss\s+php-fpm' | grep -E '[0-9]+\.[0-9]+' -o)
+
+case "$1" in
+    configure)
+        echo "Creating config directory"
+        mkdir --parents /etc/arris/hidden_father_frost
+        echo "${ANSI_GREEN} Created. ${ANSI_RESET}"
+
+        echo
+
+#        echo "Relinking favicon.ico"
+#        rm --force ${PATH_PUBLIC}/favicons.ico
+#        ln --symbolic --force ${PATH_PUBLIC}/frontend/favicons/favicon.ico ${PATH_PUBLIC}/favicon.ico
+#        echo "${ANSI_GREEN} Favicon symlink created. ${ANSI_RESET}"
+
+        echo
+
+        echo "Cleaning SMARTY Cache..."
+        if [ -d "${PATH_CACHE_SMARTY}" ]; then
+            rm --force ${PATH_CACHE_SMARTY}/*
+            echo "${ANSI_GREEN} Cleared. ${ANSI_RESET}"
+        fi
+
+        echo "Fixing access rights..."
+        chown --recursive www-data:www-data ${PATH_PROJECT}/*
+        echo "${ANSI_GREEN} Ok. ${ANSI_RESET}"
+
+        echo
+
+#        echo "Making link to backup config..."
+#        ln --symbolic --force ${PATH_PROJECT}/admin.cron/rpgclubs.backup.conf /etc/arris/rpgclubs/backup.conf
+#        echo "${ANSI_GREEN} Linked. ${ANSI_RESET}"
+
+#        echo
+
+        echo "Restarting all running php-fpm processes..."
+        for version in $PHP_VERSIONS; do echo "Restarting ${ANSI_YELLOW}php${version}-fpm${ANSI_RESET} process..."; systemctl restart php${version}-fpm; done
+        echo "${ANSI_GREEN}Finished.${ANSI_RESET}"
+
+        echo
+        echo "${ANSI_GREEN} ... post-install finished. ${ANSI_RESET}"
+        echo
+
+    ;;
+
+    abort-upgrade|abort-remove|abort-deconfigure)
+
+    ;;
+
+    *)
+        echo "postinst called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+esac
+
+#DEBHELPER#
+
+exit 0

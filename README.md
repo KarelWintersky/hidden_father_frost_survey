@@ -2,6 +2,10 @@
 
 Сбор данных для движухи "Тайный Дед Мороз"
 
+# DEB
+
+Package name: `hiddenfatherfrost`
+
 # SQL
 
 ```sql
@@ -33,6 +37,11 @@ DB.PASSWORD     = "password"
 DB.NAME         = "hiddenfatherfrost"
 DB.CHARSET	    = "utf8mb4"
 DB.COLLATE	    = "utf8mb4_unicode_ci"
+
+[mailer]
+MAILER.SMTP.USERNAME = ''
+MAILER.SMTP.PASSWORD = ''
+
 ```
 put it to `/etc/arris/hidden_father_frost/site.ini`
 
