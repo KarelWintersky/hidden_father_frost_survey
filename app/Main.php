@@ -6,6 +6,7 @@ use AllowDynamicProperties;
 use Arris\AppRouter;
 use AJUR\FluentPDO\Exception;
 use AJUR\FluentPDO\Query;
+use Arris\Cache\Cache;
 
 #[AllowDynamicProperties]
 class Main
@@ -17,7 +18,7 @@ class Main
         $this->pdo = App::$pdo;
         $this->template = App::$template;
 
-        $this->table = 'participants';
+        $this->table = App::SQL_TABLE;
     }
 
     public function view()
@@ -28,6 +29,10 @@ class Main
         }
         // App::$flash->addMessage("flash", ['notify' => "Форма загружена"]);
         // App::$flash->addMessage("flash", ['notify' => "Форма загружена2"]);
+
+        $members_count = Cache::get(App::REDIS_KEY);
+
+        $this->template->assign("members_count", $members_count);
 
         $this->template->assign("state", "anketa");
         $this->template->assign("title", "Анкета участника");
@@ -80,6 +85,8 @@ class Main
             ->values($dataset);
 
         $query->execute();
+
+        Cache::flush(App::REDIS_KEY);
 
         // $sth = $this->pdo->prepare("INSERT INTO participants (fio, email, address, cards_count) VALUES (:fio, :email, :address, :cards_count)" );
 

@@ -1,7 +1,9 @@
 <?php
 
+use AJUR\FluentPDO\Query;
 use Arris\AppLogger;
 use Arris\AppRouter;
+use Arris\Cache\Cache;
 use SecretFatherFrost\App;
 
 define('PATH_ROOT', dirname(__DIR__, 1));
@@ -20,6 +22,7 @@ try {
 
     $options = parse_ini_file(PATH_ENV . 'site.ini', true);
     $credentials = $options['database'];
+    $credentials_redis = $options['redis'] ?? [ 'REDIS.ENABLED' =>  0 ];
 
     AppLogger::init("rpgClubs", bin2hex(random_bytes(4)), [
         'default_logfile_path'      =>  PATH_ROOT . '/logs/',
@@ -39,6 +42,20 @@ try {
         'charset'           =>  $credentials['DB.CHARSET'],
         'charset_collate'   =>  $credentials['DB.COLLATE'],
         'slow_query_threshold'  => 1
+    ]);
+
+    Cache::init([
+        'enabled'   =>  $credentials_redis['REDIS.ENABLED'],
+        'database'  =>  $credentials_redis['REDIS.DATABASE'],
+    ], [], App::$pdo);
+
+    Cache::addRule(App::REDIS_KEY, [
+        'source'    =>  \Arris\Cache\CacheInterface::RULE_SOURCE_CALLBACK,
+        'action'    =>  static function() {
+            $query = new Query(App::$pdo, includeTableAliasColumns: true);
+            $members_count = $query->from(App::SQL_TABLE)->count();
+            return $members_count ?? 0;
+        }
     ]);
 
     App::$template = new \Arris\Template\Template();

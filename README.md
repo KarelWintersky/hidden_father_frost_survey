@@ -40,6 +40,13 @@ DB.COLLATE	    = "utf8mb4_unicode_ci"
 MAILER.SMTP.USERNAME = ''
 MAILER.SMTP.PASSWORD = ''
 
+[redis]
+REDIS.ENABLED = 1
+REDIS.DATABASE = 8
+
+; 8 because 'H' is eight letter of aplhabet
+
+
 ```
 put it to `/etc/arris/hidden_father_frost/site.ini`
 
