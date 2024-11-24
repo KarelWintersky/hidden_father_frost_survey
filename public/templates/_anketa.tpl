@@ -4,14 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Анкета участника</title>
 
+    <title>Анкета участника движухи "Тайный Дед-Мороз"</title>
+    <meta name="description" content="Хочешь быть в числе счастливчиков? Нет ничего проще: заполняешь анкету, выбираешь, сколько открыток ты готов отравить сам... и ждешь. Ждешь середины декабря, когда станет понятно, кого ты осчастливишь в этом году. ">
+
+    <meta property="og:url" content="https://fatherfrost.wintersky.ru/">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Анкета участника движухи &quot;Тайный Дед-Мороз&quot;">
     <meta property="og:description" content="Хочешь быть в числе счастливчиков? Нет ничего проще: заполняешь анкету, выбираешь, сколько открыток ты готов отравить сам... и ждешь. Ждешь середины декабря, когда станет понятно, кого ты осчастливишь в этом году. ">
-    <meta property="og:url" content="https://fatherfrost.wintersky.ru/">
     <meta property="og:image" content="https://fatherfrost.wintersky.ru/assets/pe4kin_stiker.jpg">
     <meta property="og:site_name" content="Тайный Дед Мороз">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="twitter:domain" content="fatherfrost.wintersky.ru">
+    <meta property="twitter:url" content="https://fatherfrost.wintersky.ru/">
+    <meta name="twitter:title" content="Анкета участника движухи &quot;Тайный Дед-Мороз&quot;">
+    <meta name="twitter:description" content="Хочешь быть в числе счастливчиков? Нет ничего проще: заполняешь анкету, выбираешь, сколько открыток ты готов отравить сам... и ждешь. Ждешь середины декабря, когда станет понятно, кого ты осчастливишь в этом году. ">
+    <meta name="twitter:image" content="https://fatherfrost.wintersky.ru/assets/pe4kin_stiker.jpg">
 
     {include file="templates/_favicons.tpl"}
 

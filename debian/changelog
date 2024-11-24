@@ -1,9 +1,9 @@
-hiddenfatherfrost (1.0.0) UNRELEASED; urgency=medium
+hiddenfatherfrost (1.0.2) stable; urgency=medium
 
   * Release 
   * fixed intro text
 
- -- Karel Wintersky <karel.wintersky@yandex.ru>  Sun, 24 Nov 2024 21:29:43 +0300
+ -- Karel Wintersky <karel.wintersky@yandex.ru>  Sun, 24 Nov 2024 22:36:06 +0300
 
 hiddenfatherfrost (0.99.100) stable; urgency=medium
 
