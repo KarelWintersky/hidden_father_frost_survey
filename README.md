@@ -10,17 +10,15 @@ Package name: `hiddenfatherfrost`
 
 ```sql
 
-CREATE TABLE hiddenfatherfrost.participants (
-	id INT auto_increment NOT NULL COMMENT 'id',
-	fio varchar(100) DEFAULT '' NULL COMMENT 'ФИО',
-	email varchar(100) DEFAULT '' NULL COMMENT 'email',
-	address TEXT NULL COMMENT 'address',
-	cards_count INT DEFAULT 1 NULL COMMENT 'cards_count',
-	CONSTRAINT participants_pk PRIMARY KEY (id)
-)
-ENGINE=InnoDB
-DEFAULT CHARSET=utf8mb4
-COLLATE=utf8mb4_general_ci;
+CREATE TABLE `participants` (
+    `id` int NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `fio` varchar(100) COLLATE utf8mb4_general_ci DEFAULT '' COMMENT 'ФИО',
+    `email` varchar(100) COLLATE utf8mb4_general_ci DEFAULT '' COMMENT 'email',
+    `address` text COLLATE utf8mb4_general_ci COMMENT 'address',
+    `cards_count` int DEFAULT '1' COMMENT 'cards_count',
+    PRIMARY KEY (`id`),
+    KEY `participants_email_IDX` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
 ```

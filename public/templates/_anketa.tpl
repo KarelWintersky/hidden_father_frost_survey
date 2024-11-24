@@ -166,21 +166,42 @@
 </head>
 <body>
     <div class="form-container">
+        <div style="font-size: xx-small; float: right">Version 1.0</div>
         <h2>Анкета участника движухи "Тайный Дед-Мороз"</h2>
+        <div>
+            <p>Чу! Вы слышите эти звуки? <br></p>
+            <p>
+                Колокольца звенят, колокольца звенят! <br>
+                Это почтовые сани Деда Мороза несут поздравления писателям...
+            </p>
+            <p>
+                Олени рвутся вперед из последних сил, спешат донести слова о музе, миллионных тиражах, миллиардных гонорарах.
+                И ведь все сбудется, ведь это сказка, Новый год!
+            </p>
+            <p>
+                Хочешь быть в числе счастливчиков? Нет ничего проще: заполняешь анкету, выбираешь, сколько открыток ты готов отравить сам... и ждешь.<br>
+                Ждешь середины декабря, когда станет понятно, кого ты осчастливишь в этом году.
+            </p>
+            <p style="font-size: small">
+                Как это работает? До <span style="color: #084298">полуночи 15 декабря 2024</span> (но это неточно) система собирает ваши адреса и количество открыток, которые вы готовы отправить.
+                Потом в автоматическом режиме вычисляется, кто кому отправит открытку.
+            </p>
+        </div>
+        <hr>
         <form action="{Arris\AppRouter::getRouter('callback')}" method="post">
             <input type="hidden" name="action" value="request">
             <label>
-                <input type="text" name="fio" placeholder="Имя отправителя (для учёта)" required>
+                <input type="text" name="fio" placeholder="Имя отправителя (для статистики)" required>
             </label>
             <label>
-                <input type="email" name="email" placeholder="Email отправителя (для учёта)" required>
+                <input type="email" name="email" placeholder="Email отправителя" required>
             </label>
             <label>
-                <textarea name="address" placeholder="Адрес получателя открытки (включая индекс)" required></textarea>
+                <textarea name="address" placeholder="Укажите адрес, на который вы хотите получить открытку. " required></textarea>
             </label>
 
             <br><br>
-            Я отправлю:
+            Я отправлю:&nbsp;&nbsp;
             <label>
                 <select name="cards_count">
                     <option value="1" selected>1 открытку</option>
@@ -201,7 +222,7 @@
 
             <label>
                 <input type="checkbox" name="agreement" required>
-                Я согласен/согласна на участие в розыгрыше
+                Я согласен/согласна на участие.
             </label>
             <br><br><br>
 
