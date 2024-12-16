@@ -20,11 +20,15 @@ try {
 
     require_once __DIR__ . '/../vendor/autoload.php';
 
+    App::init();
+
     $options = parse_ini_file(PATH_ENV . 'site.ini', true);
     $credentials = $options['database'];
     $credentials_redis = $options['redis'] ?? [ 'REDIS.ENABLED' =>  0 ];
 
-    AppLogger::init("rpgClubs", bin2hex(random_bytes(4)), [
+    $activity = $_GET['activity'] ?? $options['DEFAULT_ACTIVITY'] ?? 'default';
+
+    AppLogger::init("secret_father_frost", bin2hex(random_bytes(4)), [
         'default_logfile_path'      =>  PATH_ROOT . '/logs/',
         'default_logfile_prefix'    =>  date_format(date_create(), 'Y-m') . '__'
     ]);
