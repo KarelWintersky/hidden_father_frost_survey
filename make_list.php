@@ -146,18 +146,21 @@ while (true) {
     // iterate each sender
     foreach ($senders as $sender) {
         $possible_recipients = array_filter($senders, function ($item) use ($sender){
-            return $item['will_recieve'] < 3;
-        });
-
-        $possible_recipients = array_filter($possible_recipients, function ($item) use ($sender){
-            return $item['id'] !== $sender['id'];
+            // return $item['will_recieve'] < 4;
+            // неактуально, список получаетелей вычисляется ЕДИНОЖДЫ
+            return true;
         });
 
         $possible_recipients = shuffle_forced($senders);
+
+        $possible_recipients = array_filter($possible_recipients, function ($item) use ($sender){
+            return $item['email'] !== $sender['email'];
+        });
+
         $possible_recipients = array_slice($possible_recipients, 0, $sender['will_send']);
 
         foreach ($possible_recipients as $recipient) {
-            arrInc($senders, 'id', $recipient['id'], 'will_recieve');
+            // arrInc($senders, 'id', $recipient['id'], 'will_recieve'); // неактуально, поскольку нет фильтра по этому полю
             arrPut($senders_list, 'id', $sender['id'], 'letters', [
                 'id'        =>  $recipient['id'],
                 'email'     =>  $recipient['email'],
@@ -208,7 +211,7 @@ HEAD;
 * {$letter['fio']}, по адресу: {$letter['address']}\n
 LETTER;
     }
-    $who = $bottom_message[ mt_rand(0, count($bottom_message))-1 ];
+    $who = $bottom_message[ mt_rand(0, count($bottom_message)-1) ];
     $message .= <<<BOTTOM
 
 С уважением, ваш покорный слуга, {$who}.\n  
