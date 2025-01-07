@@ -62,14 +62,14 @@ try {
         }
     ]);
 
-    App::$template = new \Arris\Template\Template();
+    App::$template = new \Arris\Presenter\Template();
     App::$template
         ->setTemplateDir(__DIR__)
         ->setCompileDir(PATH_ROOT . '/cache/')
         ->setForceCompile(true)
         ->registerClass("Arris\AppRouter", "Arris\AppRouter");
 
-    App::$flash = new \Arris\Template\FlashMessages();
+    App::$flash = new \Arris\Presenter\FlashMessages();
 
     AppRouter::init();
     AppRouter::setDefaultNamespace("\SecretFatherFrost");
@@ -86,11 +86,10 @@ try {
 } catch (Exception $e) {
     dd($e);
 }
+
 $render = App::$template->render();
 if (!empty($render)) {
     App::$template->headers->send();
-
-    $render = \preg_replace('/^\h*\v+/m', '', $render); // удаляем лишние переводы строк
 
     echo $render;
 }

@@ -3,8 +3,8 @@
 namespace SecretFatherFrost;
 
 use Arris\Database\DBWrapper;
-use Arris\Template\FlashMessages;
-use Arris\Template\Template;
+use Arris\Presenter\FlashMessages;
+use Arris\Presenter\Template;
 use PDO;
 
 class App extends \Arris\App
