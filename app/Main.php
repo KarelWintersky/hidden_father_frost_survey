@@ -53,6 +53,8 @@ class Main
      */
     public function callback()
     {
+        $this->template->setTemplate( 'templates/result.tpl');
+
         if ($_REQUEST['captcha'] !== $_SESSION['captcha_keystring']) {
             unset($_REQUEST['captcha']); // иначе значение капчи окажется сохранено в flash-message
 
@@ -75,7 +77,11 @@ class Main
         $query = new Query($this->pdo, includeTableAliasColumns: true);
 
         // проверяем, была ли заявка?
-        $query = $query->from($this->table)->where('email = ?', $dataset['email']);
+        $query = $query
+            ->from($this->table)
+            ->where('email = ?', $dataset['email'])
+            ->where("event_year", App::$options['EVENT_YEAR'])
+        ;
 
         $email = $query->fetch();
 
@@ -95,8 +101,6 @@ class Main
         $query->execute();
 
         Cache::drop(App::REDIS_KEY);
-
-        $this->template->setTemplate( 'templates/result.tpl');
 
         return true;
     }
