@@ -1,4 +1,5 @@
 #!/usr/bin/make
+.PHONY: help install update build dchv dchr dchn
 PACKAGE_NAME  = hiddenfatherfrost
 INSTALL_DIR = hiddenfatherfrost
 PATH_PROJECT = $(DESTDIR)/var/www/$(INSTALL_DIR)
@@ -19,7 +20,6 @@ install:  	##@system Install package. Don't run it manually!!!
 	git log --oneline --format=%B -n 1 HEAD | head -n 1 >> $(PATH_PUBLIC)/_version
 	git log --oneline --format="%at" -n 1 HEAD | xargs -I{} date -d @{} +%Y-%m-%d >> $(PATH_PUBLIC)/_version
 	set -e && cd $(PATH_PROJECT)/ && composer install && rm composer.lock
-#	cp makefile.production-toolkit $(PATH_PROJECT)/makefile
 	chmod -R -x+X $(PATH_PROJECT)/*
 	chmod 444 $(PATH_PROJECT)/public/*.php
 	install -d $(PATH_PROJECT)/cache
@@ -29,18 +29,14 @@ update:		##@build Update project from GIT
 	@echo Updating project from GIT
 	git pull --no-rebase
 
-#make_env:   ##@work Prepare local environment
-#	@npm ci
-
 build:	##@build Build DEB-package with gulp
 	@dh_clean
-#	@./node_modules/.bin/gulp build --production
 	export COMPOSER_HOME=/tmp/ && dpkg-buildpackage -rfakeroot -uc -us --compression-level=9 --diff-ignore=node_modules --tar-ignore=node_modules
 	@dh_clean
 
-#compile:		##@work Compile dev version
-#	@echo Compiling with GULP
-#	@./node_modules/.bin/gulp build
+phar:	##@build Compile PHAR file
+	@box compile --config=box.json
+
 
 dchr:		##@development Publish release
 	@dch --controlmaint --release --distribution unstable
@@ -53,7 +49,8 @@ dchv:		##@development Append release
 	echo "$(YELLOW)--------------------------------------------------------------$(RESET)" && \
 	read -p "Next version: " VERSION && \
 	dch --controlmaint -v $$VERSION
-dchc:           ##@development Create new changelog file
+
+dchn:           ##@development Create new changelog file
 	@export DEBEMAIL="karel.wintersky@yandex.ru" && \
 	export DEBFULLNAME="Karel Wintersky" && \
 	dch --create

@@ -11,43 +11,45 @@ Package name: `hiddenfatherfrost`
 ```sql
 
 CREATE TABLE `participants` (
-    `id` int NOT NULL AUTO_INCREMENT COMMENT 'id',
-    `fio` varchar(100) COLLATE utf8mb4_general_ci DEFAULT '' COMMENT 'ФИО',
-    `email` varchar(100) COLLATE utf8mb4_general_ci DEFAULT '' COMMENT 'email',
-    `address` text COLLATE utf8mb4_general_ci COMMENT 'address',
-    `cards_count` int DEFAULT '1' COMMENT 'cards_count',
+    `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `fio` varchar(100) DEFAULT '' COMMENT 'ФИО',
+    `email` varchar(100) DEFAULT '' COMMENT 'email',
+    `address` text DEFAULT NULL COMMENT 'address',
+    `cards_count` int(11) DEFAULT 1 COMMENT 'cards_count',
+    `event_year` int(11) DEFAULT 2024 COMMENT 'год события',
     PRIMARY KEY (`id`),
     KEY `participants_email_IDX` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 
 ```
 
 # INI
 
 ```ini
-[database]
-DB.DRIVER       = "mysql"
-DB.HOST         = "127.0.0.1"
-DB.PORT         = 3306
-DB.USERNAME     = "root"
-DB.PASSWORD     = "password"
-DB.NAME         = "hiddenfatherfrost"
-DB.CHARSET	    = "utf8mb4"
-DB.COLLATE	    = "utf8mb4_unicode_ci"
+; год события
+EVENT_YEAR = 2025
+EVENT_END = "15 декабря 2024"
 
-[mailer]
-MAILER.SMTP.USERNAME = ''
-MAILER.SMTP.PASSWORD = ''
+[DATABASE]
+DRIVER		= "mysql"
+HOST         	= "127.0.0.1"
+PORT         	= 3306
+USERNAME     	= "root"
+PASSWORD     	= "password"
+DBNAME       	= "hiddenfatherfrost"
+CHARSET		= "utf8mb4"
+COLLATE		= "utf8mb4_unicode_ci"
 
-[redis]
-REDIS.ENABLED = 1
-REDIS.DATABASE = 8
-
+[REDIS]
 ; 8 because 'H' is eight letter of aplhabet
+ENABLED = 1
+DATABASE = 2
 
-
+[FEATURES]
+; использовать радиокнопки вместо селекта
+USE_RADIO_BUTTONS = 1
 ```
+
 put it to `/etc/arris/hidden_father_frost/site.ini`
 
 # Nginx 

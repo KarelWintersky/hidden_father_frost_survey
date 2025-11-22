@@ -34,9 +34,18 @@ class Main
 
         $this->template->assign("members_count", $members_count);
 
+        $event_year = App::$options['EVENT_YEAR'];
+        $event_end = App::$options['EVENT_END'] ?? "15 декабря {$event_year}";
+
+        $this->template->assign("event_end", $event_end);
+
+        $this->template->assign("domain", App::$options['DOMAIN'] ?? '');
+
+        $this->template->assign("use_radio", (int)App::$options['FEATURES']['USE_RADIO_BUTTONS'] ?? 0);
+
         $this->template->assign("state", "anketa");
         $this->template->assign("title", "Анкета участника");
-        $this->template->setTemplate('templates/_anketa.tpl');
+        $this->template->setTemplate('templates/anketa.tpl');
     }
 
     /**
@@ -55,13 +64,12 @@ class Main
             return true;
         }
 
-        $this->template->setTemplate( 'templates/_result.tpl');
-
         $dataset = [
             'fio'           =>  input('fio'),
             'email'         =>  input('email'),
             'address'       =>  input('address'),
             'cards_count'   =>  input('cards_count'),
+            'event_year'    =>  App::$options['EVENT_YEAR']
         ];
 
         $query = new Query($this->pdo, includeTableAliasColumns: true);
@@ -86,11 +94,9 @@ class Main
 
         $query->execute();
 
-        Cache::flush(App::REDIS_KEY);
+        Cache::drop(App::REDIS_KEY);
 
-        // $sth = $this->pdo->prepare("INSERT INTO participants (fio, email, address, cards_count) VALUES (:fio, :email, :address, :cards_count)" );
-
-        // (new Mailer())->mailToAdmin("Новый клуб", "Некто с адресом {$dataset['owner_email']} подал заявку на добавление клуба {$dataset['title']}");
+        $this->template->setTemplate( 'templates/result.tpl');
 
         return true;
     }

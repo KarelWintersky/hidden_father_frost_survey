@@ -1,6 +1,6 @@
 <?php
 
-use Arris\Database\DBWrapper;
+use Arris\Database\Connector;
 use Arris\Helpers\Server;
 use Psr\Log\LoggerInterface;
 use SecretFatherFrost\App;
@@ -41,14 +41,15 @@ function logSiteUsage(LoggerInterface $logger, $is_print = false): void
     ];
 
     /**
-     * @var DBWrapper $pdo
+     * @var Connector $pdo
      */
     $pdo = App::$pdo;
 
     if (!is_null($pdo)) {
-        $stats = $pdo->getStats();
-        $metrics['mysql.queries'] = $stats['total_queries'];
-        $metrics['mysql.time'] = $stats['total_time'];
+        $stats = $pdo->stats();
+
+        $metrics['mysql.queries'] = $stats->getTotalQueryCount();
+        $metrics['mysql.time'] = $stats->getTotalQueryTime();
     }
 
     $metrics['ipv4'] = Server::getIP();
@@ -57,8 +58,8 @@ function logSiteUsage(LoggerInterface $logger, $is_print = false): void
         $site_usage_stats = sprintf(
             '<!-- Consumed memory: %u bytes, SQL query count: %u, SQL time %g sec, Total time: %g sec. -->',
             $metrics['memory.usage'],
-            $metrics['MySQL']['Queries'],
-            $metrics['MySQL']['Time'],
+            $metrics['mysql.queries'],
+            $metrics['mysql.time'],
             $metrics['time.total']
         );
         echo $site_usage_stats . PHP_EOL;

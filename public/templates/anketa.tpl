@@ -8,20 +8,7 @@
     <title>Анкета участника движухи "Тайный Дед-Мороз"</title>
     <meta name="description" content="Хочешь быть в числе счастливчиков? Нет ничего проще: заполняешь анкету, выбираешь, сколько открыток ты готов отправить сам... и ждешь. Ждешь середины декабря, когда станет понятно, кого ты осчастливишь в этом году. ">
 
-    <meta property="og:url" content="https://fatherfrost.wintersky.ru/">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Анкета участника движухи &quot;Тайный Дед-Мороз&quot;">
-    <meta property="og:description" content="Хочешь быть в числе счастливчиков? Нет ничего проще: заполняешь анкету, выбираешь, сколько открыток ты готов отправить сам... и ждешь. Ждешь середины декабря, когда станет понятно, кого ты осчастливишь в этом году. ">
-    <meta property="og:image" content="https://fatherfrost.wintersky.ru/assets/pe4kin_stiker.jpg">
-    <meta property="og:site_name" content="Тайный Дед Мороз">
-
-    <meta name="twitter:card" content="summary_large_image">
-    <meta property="twitter:domain" content="fatherfrost.wintersky.ru">
-    <meta property="twitter:url" content="https://fatherfrost.wintersky.ru/">
-    <meta name="twitter:title" content="Анкета участника движухи &quot;Тайный Дед-Мороз&quot;">
-    <meta name="twitter:description" content="Хочешь быть в числе счастливчиков? Нет ничего проще: заполняешь анкету, выбираешь, сколько открыток ты готов отправить сам... и ждешь. Ждешь середины декабря, когда станет понятно, кого ты осчастливишь в этом году. ">
-    <meta name="twitter:image" content="https://fatherfrost.wintersky.ru/assets/pe4kin_stiker.jpg">
-
+    {include file="templates/_opengraph.tpl"}
     {include file="templates/_favicons.tpl"}
 
     <style>
@@ -97,6 +84,18 @@
             button {
                 padding: 8px;
             }
+        }
+        /* радиокнопки вместо селекта */
+        input[type="radio"] {
+            transform: scale(1.1);
+        }
+        label {
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+        label:hover {
+            background-color: #f8f9fa;
+            border-color: #4CAF50;
         }
     </style>
     <style>
@@ -199,7 +198,7 @@
                 Ждешь середины декабря, когда станет понятно, кого ты осчастливишь в этом году.
             </p>
             <p style="font-size: small">
-                Как это работает? До <span style="color: #084298">полуночи 15 декабря 2024</span> (но это неточно) система собирает ваши адреса и количество открыток, которые вы готовы отправить.
+                Как это работает? До <span style="color: #084298">полуночи {$event_end} г.</span> (но это неточно) система собирает ваши адреса и количество открыток, которые вы готовы отправить.
                 Потом в автоматическом режиме вычисляется, кто кому {if $members_count}(одному из {$members_count}){/if} отправит открытку.
             </p>
         </div>
@@ -217,22 +216,46 @@
             </label>
 
             <br><br>
-            Я отправлю:&nbsp;&nbsp;
-            <label>
-                <select name="cards_count">
-                    <option value="1" selected>1 открытку</option>
-                    <option value="2">2 открытки</option>
-                    <option value="3">3 открытки</option>
-                </select>
-            </label>
-            <br><br>
+            Я отправлю:
+
+            {if $use_radio eq 0}
+
+            &nbsp;
+                <label>
+                    <select name="cards_count">
+                        <option value="1">1 открытку</option>
+                        <option value="2" selected>2 открытки</option>
+                        <option value="3">3 открытки</option>
+                    </select>
+                </label>
+            <br>
+            {else}
+
+                <br><br>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <label style="display: flex; align-items: center; padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; transition: all 0.2s ease;">
+                        <input type="radio" name="cards_count" value="1" style="margin: 0 10px 0 0;">
+                        <span>1 открытку</span>
+                    </label>
+                    <label style="display: flex; align-items: center; padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; transition: all 0.2s ease;">
+                        <input type="radio" name="cards_count" value="2" checked style="margin: 0 10px 0 0;">
+                        <span>2 открытки</span>
+                    </label>
+                    <label style="display: flex; align-items: center; padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; transition: all 0.2s ease;">
+                        <input type="radio" name="cards_count" value="3" style="margin: 0 10px 0 0;">
+                        <span>3 открытки</span>
+                    </label>
+                </div>
+
+            {/if}
+            <br>
             <hr>
             <br>
 
             <div class="captcha">
                 <img src="/captcha.php" alt="Капча" width="120" height="60" onclick="this.src='/captcha.php?r=' + Math.random(); return false;">
                 <label>
-                    <input type="text" name="captcha" placeholder="Введите капчу" required>
+                    <input type="text" name="captcha" placeholder="Введите символы с картинки" required>
                 </label>
             </div>
 

@@ -14,18 +14,17 @@
         "ext-pdo": "*",
         "ext-json": "*",
         "ext-intl": "*",
+        "ext-redis": "*",
         "karelwintersky/arris": "^2.12",
-        "karelwintersky/arris.logger": "^1.99",
-        "karelwintersky/arris.router": "^1.101",
-        "karelwintersky/arris.entity": "^0",
-        "karelwintersky/arris.database": "^1.0",
+        "karelwintersky/arris.logger": "^2",
+        "karelwintersky/arris.router": "^2",
+        "karelwintersky/arris.database": "^2",
         "karelwintersky/arris.helpers": "^0.6.0",
-        "karelwintersky/arris.toolkit.cli-console": "^1.0",
+        "karelwintersky/arris.cache": "^1",
+        "karelwintersky/arris.presenter": "^1",
         "psr/log": "*",
         "ajur-media/kcaptcha": "^1.2",
-        "ajur-media/fluentpdo": "^1.99",
-        "karelwintersky/arris.cache": "^0.99.0",
-        "karelwintersky/arris.presenter": "^1.0"
+        "ajur-media/fluentpdo": "^1.99"
     },
     "autoload": {
         "files": [
